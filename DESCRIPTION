@@ -1,0 +1,36 @@
+Package: muSpaData
+Version: 0.99.0
+Title: Multi-sample multi-group spatially resolved transcriptomic data
+Description: Data package containing a multi-sample multi-group spatial dataset in SpatialExperiment Bioconductor object format.
+Authors@R: person("Peiying", "Cai", email = "peiying.cai@uzh.ch", role = c("aut", "cre"))
+URL: https://github.com/peicai/muSpaData
+BugReports: https://github.com/peicai/muSpaData/issues
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.3),
+    ExperimentHub,
+    SpatialExperiment
+Imports:
+    utils
+Suggests: 
+    BiocStyle, 
+    dplyr,
+    DropletUtils,
+    knitr, 
+    GEOquery,
+    Matrix,
+    matrixStats,
+    methods,
+    rmarkdown,
+    R.utils,
+    readxl,
+    scater,
+    scds,
+    Seurat
+biocViews: 
+    ExperimentHub, 
+    ExperimentData, 
+    ExpressionData, 
+    SpatialData
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1

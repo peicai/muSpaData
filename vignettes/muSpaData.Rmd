@@ -1,0 +1,103 @@
+---
+title: |
+  | Multi-sample multi-group
+  | spatially resolved transcriptomic data
+author: "Peiying Cai"
+date: "`r doc_date()`"
+vignette: >
+  %\VignetteIndexEntry{Multi-sample multi-group spatially resolved transcriptomic data}
+  %\VignetteEngine{knitr::rmarkdown}
+output: 
+  BiocStyle::html_document
+bibliography: refs.bib
+---
+
+# Overview
+
+The `muSpaData` package includes datasets for use in the `DESpace`
+package's examples and vignettes. It provides access to a publicly available Stereo-seq spatial dataset with complex experimental designs. This dataset, containing multiple samples (e.g., serial sections) measured under various experimental conditions (e.g., time points), is formatted as `SpatialExperiment` (SPE) Bioconductor objects. 
+
+# Available datasets
+
+The table below provides details about the available dataset, including its unique identifier (ID), description, source, and reference. View details directly in R using `?ID` (e.g., `?Wei22_full`).
+
+ID | Description | Availability | Reference
+---|-------------|--------------|----------
+`Wei22_full` | Single-cell Stereo-seq spatial transcriptomics data includes axolotl brain tissues collected from multiple sections across various regeneration stages (16 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
+`Wei22_example` | A subset of the Wei22_full dataset, focusing on fewer genes and regeneration stages (6 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
+
+After downloading the raw data from the original source, we merge samples across different time phases, perform quality control to filter low-quality genes and cells, and apply @Banksy for multi-sample clustering and smoothing. The finalized SPE objects are made available via Bioconductor's ExperimentHub for easy access and reproducibility.
+
+# Installation
+
+`muSpaData` is an R package available via
+[Bioconductor](http://bioconductor.org/) repository for packages. GitHub
+repository can be found
+[here](https://github.com/peicai/muSpaData).
+
+```{r install, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("muSpaData")
+
+## Check that you have a valid Bioconductor installation
+BiocManager::valid()
+```
+Then load `muSpaData`:
+
+```{r, message = FALSE}
+library(muSpaData)
+```
+
+# Data loading
+
+All datasets in `muSpaData` can be loaded either through named functions corresponding to the object names or via the `ExperimentHub` interface. Each SPE contains filtered counts in the `assay` slot, with Banksy clusters stored in the `Banksy` and `Banksy_smoothed` columns within the `colData` slot.
+
+## Via accessor functions
+
+```{r, message = FALSE}
+# Load the small example spe data
+Wei22_example()
+
+# If you want to download the full data (about 2.1 GB in RAM) use:
+if (benchmarkme::get_ram() > 4e9) {
+    Wei22_full()
+}
+```
+
+
+
+## Using `query` via `ExperimentHub`
+
+First, initialize a Hub instance with `ExperimentHub` to load all records into the variable `eh`. Use `query` to identify `muSpaData` records and their accession IDs (e.g., EH123), then load the data into R with `eh[[id]]`.
+
+```{r message = FALSE}
+# Connect to ExperimentHub and create Hub instance
+library(ExperimentHub)
+eh <- ExperimentHub()
+(q <- query(eh, "muSpaData"))
+# load the first resource in the list
+q[[1]]  
+# load by accession id
+eh[["EH2259"]]
+```
+
+## Using `list/loadResources`
+
+To facilitate data discovery within `muSpaData` rather than across all of ExperimentHub, available records can be viewed using `listResources`.
+To load a specific dataset or subset, use `loadResources`. 
+
+```{r message = FALSE}
+listResources(eh, "muSpaData")
+
+# load data using a character vector of metadata search terms 
+loadResources(eh, "muSpaData", c("example"))
+```
+
+# Session info
+```{r}
+sessionInfo()
+```
+
+# References
