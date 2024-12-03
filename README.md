@@ -24,7 +24,7 @@ install.packages("remotes")
 remotes::install_github("peicai/muSpaData")
 ```
 
-## Datasets:
+## Data
 
 - *`Wei22_full`* (`SpatialExperiment` object):  
  A comprehensive spatial transcriptomics dataset at single-cell resolution, capturing axolotl telencephalon regeneration stages. The dataset includes axolotl brain tissues collected from multiple sections across various regeneration stages: 2 (3 sections), 5 (3 sections), 10 (3 sections), 15 (4 sections), and 20 (3 sections) days post injury (DPI).  [[data source](https://db.cngb.org/stomics/artista/), [reference](https://doi.org/10.1126/science.abp9444)]
