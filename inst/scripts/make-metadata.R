@@ -19,7 +19,7 @@ meta <- data.frame(
           "It includes 2 (2 sections), 10 (2 sections), ",
           "and 20 (2 sections) days post injury (DPI).")
     ),
-    BiocVersion = "3.17.1",
+    BiocVersion = "3.20",
     Genome = NA,
     SourceType = "rds",
     SourceUrl = "https://db.cngb.org/stomics/artista/download/",
