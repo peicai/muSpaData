@@ -50,6 +50,7 @@ Then load packages:
 ```{r, message = FALSE}
 suppressMessages({
   library(muSpaData)
+  library(ExperimentHub)
   library(ggplot2)
 })
 ```
@@ -76,7 +77,6 @@ First, initialize a Hub instance with `ExperimentHub` to load all records into t
 
 ```{r message = FALSE}
 # Connect to ExperimentHub and create Hub instance
-library(ExperimentHub)
 eh <- ExperimentHub()
 (q <- query(eh, "muSpaData"))
 # load the first resource in the list
