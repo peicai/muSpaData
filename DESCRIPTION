@@ -6,31 +6,14 @@ Authors@R: person("Peiying", "Cai", email = "peiying.cai@uzh.ch", role = c("aut"
 URL: https://github.com/peicai/muSpaData
 BugReports: https://github.com/peicai/muSpaData/issues
 License: MIT + file LICENSE
-Depends:
-    R (>= 4.3),
-    ExperimentHub,
-    SpatialExperiment
-Imports:
-    utils
-Suggests: 
-    BiocStyle, 
-    dplyr,
-    DropletUtils,
-    knitr, 
-    GEOquery,
-    Matrix,
-    matrixStats,
-    methods,
-    rmarkdown,
-    R.utils,
-    readxl,
-    scater,
-    scds,
-    Seurat
-biocViews: 
-    ExperimentHub, 
-    ExperimentData, 
-    ExpressionData, 
-    SpatialData
+Depends: R (>= 4.3), ExperimentHub, SpatialExperiment
+Imports: utils
+Suggests: BiocStyle, DropletUtils, knitr, rmarkdown, R.utils
+biocViews: ExperimentHub, ExperimentData, ExpressionData, SpatialData
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.2
+Encoding: UTF-8
+NeedsCompilation: no
+Packaged: 2024-12-16 13:37:44 UTC; peiyingcai
+Author: Peiying Cai [aut, cre]
+Maintainer: Peiying Cai <peiying.cai@uzh.ch>

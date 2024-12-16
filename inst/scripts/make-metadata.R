@@ -42,4 +42,4 @@ meta <- data.frame(
 )
 
 # write to .csv
-write.csv(meta, file = "../extdata/metadata.csv", row.names = FALSE)
+write.csv(meta, file = "./inst/extdata/metadata.csv", row.names = FALSE)

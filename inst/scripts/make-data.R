@@ -288,7 +288,38 @@ colData(spe_Banksy) <- cbind(colData(spe_Banksy),
 colnames(colData(spe_Banksy)) <- c("sample_id", "condition",
                                    "Banksy", "Banksy_smooth", 
                                    "sdimx", "sdimy")
+colData(spe_Banksy) <- subset(colData(spe_Banksy), select = -Banksy)
 spe <- spe_Banksy; rm(spe_Banksy)
+
+sample_ids <- unique(spe$sample_id)
+# rotate tissue coordinates to ensure all sections look consistent.
+rotate_coord <- function(spe, sample) {
+  spe_object <- spe[, spe$sample_id == sample]
+  sdimx <- spe_object[["sdimx"]]
+  sdimy <- spe_object[["sdimy"]]
+  if (sample %in% c('2DPI_1', '5DPI_3')) {
+    # Rotate 180 degrees: Reverse both x and y
+    sdimx <- -sdimx
+    sdimy <- -sdimy
+  } else if (sample %in% c('5DPI_1', '5DPI_2', '10DPI_2', 
+                              '15DPI_1', '15DPI_2', '15DPI_3',
+                              '15DPI_4', '20DPI_1', '20DPI_2')) {
+    # Rotate 90 degrees counterclockwise: Swap x and y
+    sdimx <- -sdimy
+    sdimy <- spe_object[["sdimx"]]
+  } else if (sample %in% c('10DPI_3')) {
+    # Rotate 90 degrees clockwise: Swap x and y, reverse new y
+    sdimx <- sdimy
+    sdimy <- -spe_object[["sdimx"]]
+  }
+  
+  # Scale to ensure all coordinates are positive
+  spe_object$sdimx <- sdimx - min(sdimx) + 1
+  spe_object$sdimy <- sdimy - min(sdimy) + 1
+  return(spe_object)
+}
+all_spe <- lapply(sample_ids, function(x) rotate_coord(spe, x))
+spe <- do.call(cbind, all_spe)
 save(spe, file = paste0("./Data/Wei22_full.rda"))
 ################################################################################
 ##                      5.2 Wei2022_example
@@ -299,6 +330,8 @@ spe_subset <- spe[, spe$sample_id %in% c("2DPI_1", "2DPI_2",
                                          "10DPI_1", "10DPI_2",
                                          "20DPI_1", "20DPI_2")]
 set.seed(123)
-sel_genes <- sample(dim(spe_subset)[1],1000)
+sel_genes <- sample(dim(spe_subset)[1],5000)
 spe_example <- spe_subset[sel_genes,]
+spe_example$sample_id <- droplevels(spe_example$sample_id)
+spe_example$condition <- droplevels(spe_example$condition)
 save(spe_example, file = paste0("./Data/Wei22_example.rda"))
