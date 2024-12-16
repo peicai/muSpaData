@@ -44,10 +44,14 @@ BiocManager::install("muSpaData")
 ## Check that you have a valid Bioconductor installation
 BiocManager::valid()
 ```
-Then load `muSpaData`:
+
+Then load packages:
 
 ```{r, message = FALSE}
-library(muSpaData)
+suppressMessages({
+  library(muSpaData)
+  library(ggplot2)
+})
 ```
 
 # Data loading
@@ -65,8 +69,6 @@ if (benchmarkme::get_ram() > 5e9) {
     Wei22_full()
 }
 ```
-
-
 
 ## Using `query` via `ExperimentHub`
 
@@ -102,11 +104,11 @@ Since manual annotations are unavailable in the original dataset, we used Banksy
 ```{r view ARTISTA Banksy, fig.width=5,fig.height=4}
 # View LIBD layers for one sample
 CD <- colData(spe_example) |> as.data.frame()
-ggplot2::ggplot(CD, 
+ggplot(CD, 
     aes(x=sdimx,y=sdimy, 
     color=factor(Banksy_smooth))) +
     geom_point(size = 0.25) + 
-    theme_void() + scale_y_reverse() + 
+    theme_void() + 
     theme(legend.position="bottom") + 
     facet_wrap(~ sample_id, scales = 'free') +
     labs(color = "", title = paste0("Banksy spatial clusters"))
