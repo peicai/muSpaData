@@ -97,23 +97,6 @@ listResources(eh, "muSpaData")
 loadResources(eh, "muSpaData", c("example"))
 ```
 
-# Explore the data
-
-Since manual annotations are unavailable in the original dataset, we used Banksy [@Banksy] to define spatial domains by jointly modeling multiple samples. The Banksy spatial cluster assignments are available in the `colData()`.
-
-```{r view ARTISTA Banksy, fig.width=5,fig.height=4}
-# View LIBD layers for one sample
-CD <- colData(spe_example) |> as.data.frame()
-ggplot(CD, 
-    aes(x=sdimx,y=sdimy, 
-    color=factor(Banksy_smooth))) +
-    geom_point(size = 0.25) + 
-    theme_void() + 
-    theme(legend.position="bottom") + 
-    facet_wrap(~ sample_id, scales = 'free') +
-    labs(color = "", title = paste0("Banksy spatial clusters"))
-```
-
 # Session info
 ```{r}
 sessionInfo()
