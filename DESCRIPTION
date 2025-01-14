@@ -14,6 +14,3 @@ VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2024-12-16 13:37:44 UTC; peiyingcai
-Author: Peiying Cai [aut, cre]
-Maintainer: Peiying Cai <peiying.cai@uzh.ch>
