@@ -1,19 +1,17 @@
-\name{Wei22_full}
-\title{\code{Wei22_full} dataset}
+\name{Wei22_example}
+\title{\code{Wei22_example} dataset}
 \alias{Wei22}
-\alias{Wei22_full}
+\alias{Wei22_example}
 
 \description{
 \itemize{
-\item{Single-cell Stereo-seq spatial transcriptomics data includes axolotl brain tissues
-collected from multiple sections across five regeneration stages 
-(16 samples in total)}
-\item{The dataset contains 13890 features across 147432 cells, 
-and preprocessing has been applied.}
+\item{A subset of the Wei22_full dataset, focusing on fewer regeneration stages.}
+\item{It includes 2 (2 sections), 10 (2 sections), and 20 (2 sections) days 
+post injury (DPI).}
 \item{The original data is deposited in the Spatial Transcript Omics DataBase (STOmics DB)
 under dataset id STDS0000056.}}}
 
-\usage{Wei22_full(metadata = FALSE)}
+\usage{Wei22_example(metadata = FALSE)}
 
 \arguments{
 \item{metadata}{
@@ -32,10 +30,10 @@ under dataset id STDS0000056.}}}
 
 \examples{
 # load metadata only
-Wei22_full(metadata = TRUE)
+Wei22_example(metadata = TRUE)
 
 # load SpatialExperiment
-Wei22_full(metadata = FALSE)
+Wei22_example(metadata = FALSE)
 }
 
 \author{Peiying Cai \email{peiying.cai@uzh.ch}} 
