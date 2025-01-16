@@ -1,5 +1,5 @@
 Package: muSpaData
-Version: 0.99.3
+Version: 0.99.4
 Title: Multi-sample multi-group spatially resolved transcriptomic data
 Description: Data package containing a multi-sample multi-group spatial dataset in SpatialExperiment Bioconductor object format.
 Authors@R: person("Peiying", "Cai", email = "peiying.cai@uzh.ch", role = c("aut", "cre"), comment = c(ORCID = "0009-0001-9229-2244"))

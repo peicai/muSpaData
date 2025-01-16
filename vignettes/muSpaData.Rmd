@@ -5,9 +5,7 @@ title: |
 author: "Peiying Cai"
 date: "`r doc_date()`"
 vignette: >
-  %\VignetteIndexEntry{
-  Multi-sample multi-group 
-  spatially resolved transcriptomic data}
+  %\VignetteIndexEntry{Multi-sample multi-group spatially resolved transcriptomic data}
   %\VignetteEngine{knitr::rmarkdown}
 output: 
   BiocStyle::html_document
