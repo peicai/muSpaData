@@ -1,6 +1,5 @@
 \name{Wei22_example}
 \title{\code{Wei22_example} dataset}
-\alias{Wei22}
 \alias{Wei22_example}
 
 \description{

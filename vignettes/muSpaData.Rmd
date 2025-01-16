@@ -5,7 +5,9 @@ title: |
 author: "Peiying Cai"
 date: "`r doc_date()`"
 vignette: >
-  %\VignetteIndexEntry{Multi-sample multi-group spatially resolved transcriptomic data}
+  %\VignetteIndexEntry{
+  Multi-sample multi-group 
+  spatially resolved transcriptomic data}
   %\VignetteEngine{knitr::rmarkdown}
 output: 
   BiocStyle::html_document
@@ -24,6 +26,7 @@ The table below provides details about the available dataset, including its uniq
 ID | Description | Availability | Reference
 ---|-------------|--------------|----------
 `Wei22_full` | Single-cell Stereo-seq spatial transcriptomics data includes axolotl brain tissues collected from multiple sections across various regeneration stages (16 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
+
 `Wei22_example` | A subset of the Wei22_full dataset, focusing on fewer genes and regeneration stages (6 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
 
 After downloading the raw data from the original source, we merge samples across different time phases, perform quality control to filter low-quality genes and cells, and apply Banksy[@Banksy] for multi-sample clustering and smoothing. The finalized SPE objects are made available via Bioconductor's ExperimentHub for easy access and reproducibility.
@@ -49,9 +52,9 @@ Then load packages:
 
 ```{r, message = FALSE}
 suppressMessages({
-  library(muSpaData)
-  library(ExperimentHub)
-  library(ggplot2)
+    library(muSpaData)
+    library(ExperimentHub)
+    library(ggplot2)
 })
 ```
 
@@ -87,7 +90,10 @@ eh[["EH9613"]]
 
 ## Using `list/loadResources`
 
-To facilitate data discovery within `muSpaData` rather than across all of ExperimentHub, available records can be viewed using `listResources`.
+To facilitate data discovery within `muSpaData` 
+rather than across all of ExperimentHub, 
+available records can be viewed using `listResources`.
+
 To load a specific dataset or subset, use `loadResources`. 
 
 ```{r message = FALSE}
