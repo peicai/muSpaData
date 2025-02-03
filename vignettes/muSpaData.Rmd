@@ -1,11 +1,11 @@
 ---
 title: |
   | Multi-sample multi-group
-  | spatially resolved transcriptomic data
+  | spatial transcriptomics data
 author: "Peiying Cai"
 date: "`r doc_date()`"
 vignette: >
-  %\VignetteIndexEntry{Multi-sample multi-group spatially resolved transcriptomic data}
+  %\VignetteIndexEntry{Multi-sample multi-group spatial transcriptomics data}
   %\VignetteEngine{knitr::rmarkdown}
 output: 
   BiocStyle::html_document
@@ -15,25 +15,41 @@ bibliography: refs.bib
 # Overview
 
 The `muSpaData` package includes datasets for use in the `DESpace`
-package's examples and vignettes. It provides access to a publicly available Stereo-seq spatial dataset with complex experimental designs. This dataset, containing multiple samples (e.g., serial sections) measured under various experimental conditions (e.g., time points), is formatted as `SpatialExperiment` (SPE) Bioconductor objects. 
+package's examples and vignettes. 
+
+It provides access to a publicly available 
+Stereo-seq spatial dataset with complex experimental designs. 
+
+This dataset, containing multiple samples 
+(e.g., serial sections) measured under various 
+experimental conditions (e.g., time points), 
+is formatted as `SpatialExperiment` (SPE) Bioconductor objects. 
 
 # Available datasets
 
-The table below provides details about the available dataset, including its unique identifier (ID), description, source, and reference. View details directly in R using `?ID` (e.g., `?Wei22_full`).
+The table below provides details about the available dataset, 
+including its unique identifier (ID), description, source, and reference. 
+
+View details directly in R using `?ID` (e.g., `?Wei22_full`).
 
 ID | Description | Availability | Reference
 ---|-------------|--------------|----------
-`Wei22_full` | Single-cell Stereo-seq spatial transcriptomics data includes axolotl brain tissues collected from multiple sections across various regeneration stages (16 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
-
+`Wei22_full` | Single-cell Stereo-seq spatial transcriptomics data includes axolotl brain tissues collected from multiple sections across various regeneration stages (16 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) |@ARTISTA @Banksy
 `Wei22_example` | A subset of the Wei22_full dataset, focusing on fewer genes and regeneration stages (6 samples in total) | Spatial Transcript Omics DataBase (STOmics DB) [STDS0000056](https://db.cngb.org/stomics/datasets/STDS0000056/data) | @ARTISTA @Banksy
 
-After downloading the raw data from the original source, we merge samples across different time phases, perform quality control to filter low-quality genes and cells, and apply Banksy[@Banksy] for multi-sample clustering and smoothing. The finalized SPE objects are made available via Bioconductor's ExperimentHub for easy access and reproducibility.
+After downloading the raw data from the original source, 
+we merge samples across different time phases, 
+perform quality control to filter low-quality genes and cells, 
+and apply Banksy[@Banksy] for multi-sample clustering and smoothing. 
+
+The finalized SPE objects are made available 
+via Bioconductor's ExperimentHub for easy access and reproducibility.
 
 # Installation
 
 `muSpaData` is an R package available via
-[Bioconductor](http://bioconductor.org/) repository for packages. GitHub
-repository can be found
+[Bioconductor](http://bioconductor.org/) repository for packages. 
+GitHub repository can be found
 [here](https://github.com/peicai/muSpaData).
 
 ```{r install, eval=FALSE}
@@ -58,14 +74,22 @@ suppressMessages({
 
 # Data loading
 
-All datasets in `muSpaData` can be loaded either through named functions corresponding to the object names or via the `ExperimentHub` interface. Each SPE contains filtered counts in the `assay` slot, with Banksy clusters stored in the `Banksy` and `Banksy_smoothed` columns within the `colData` slot.
+All datasets in `muSpaData` can be loaded either through 
+named functions corresponding to the object 
+names or via the `ExperimentHub` interface.
 
-## Via accessor functions
+Each SPE contains filtered counts in the `assay` slot, 
+with Banksy clusters stored in the `Banksy` and 
+`Banksy_smoothed` columns within the `colData` slot.
+
+## Via functions
 
 ```{r, message = FALSE}
 # Load the small example spe data
-Wei22_example()
+(spe <- Wei22_example())
+```
 
+```{r, eval=FALSE}
 # If you want to download the full data (about 5.2 GB in RAM) use:
 if (benchmarkme::get_ram() > 5e9) {
     Wei22_full()
@@ -74,7 +98,12 @@ if (benchmarkme::get_ram() > 5e9) {
 
 ## Using `query` via `ExperimentHub`
 
-First, initialize a Hub instance with `ExperimentHub` to load all records into the variable `eh`. Use `query` to identify `muSpaData` records and their accession IDs (e.g., EH123), then load the data into R with `eh[[id]]`.
+First, initialize a Hub instance with `ExperimentHub` to 
+load all records into the variable `eh`. 
+
+Use `query` to identify `muSpaData` records 
+and their accession IDs (e.g., EH123), then load 
+the data into R with `eh[[id]]`.
 
 ```{r message = FALSE}
 # Connect to ExperimentHub and create Hub instance
@@ -99,6 +128,27 @@ listResources(eh, "muSpaData")
 
 # load data using a character vector of metadata search terms 
 loadResources(eh, "muSpaData", c("example"))
+```
+
+# Explore the data
+
+Since manual annotations are unavailable 
+in the original dataset, we used Banksy [@Banksy] 
+to define spatial domains by jointly modeling multiple samples. 
+
+The Banksy spatial cluster assignments are available in the `colData()`.
+
+```{r view ARTISTA Banksy, fig.width=5,fig.height=4}
+# View LIBD layers for one sample
+CD <- colData(spe) |> as.data.frame()
+ggplot(CD, 
+    aes(x=sdimx,y=sdimy, 
+    color=factor(Banksy_smooth))) +
+    geom_point(size = 0.25) + 
+    theme_void() + 
+    theme(legend.position="bottom") + 
+    facet_wrap(~ sample_id, scales = 'free') +
+    labs(color = "", title = paste0("Banksy spatial clusters"))
 ```
 
 # Session info
